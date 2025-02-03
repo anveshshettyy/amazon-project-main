@@ -5,9 +5,6 @@ import { formatCurrency } from './utils/money.js';
 loadProducts(renderProductsGrid);
 
 function renderProductsGrid() {
-
-
-
   let productsHTML = '';
 
   products.forEach((product) => {
@@ -53,13 +50,13 @@ function renderProductsGrid() {
 
       <div class="product-spacer"></div>
 
-      <div class="added-to-cart">
+      <div class="added-to-cart js-added-to-cart-${product.id}">
         <img src="images/icons/checkmark.png">
         Added
       </div>
 
       <button class="add-to-cart-button button-primary js-add-to-cart"
-      data-product-id="${product.id}">
+        data-product-id="${product.id}">
         Add to Cart
       </button>
     </div>
@@ -85,6 +82,16 @@ function renderProductsGrid() {
         const productId = button.dataset.productId;
         addToCart(productId);
         updateCartQuantity();
+        
+        const addedMessage = document.querySelector(
+          `.js-added-to-cart-${productId}`
+        );
+
+        addedMessage.classList.add('added-to-cart-visible');
+
+        setTimeout(() => {
+          addedMessage.classList.remove('added-to-cart-visible');
+        }, 2000);
       });
     });
-};
+}
